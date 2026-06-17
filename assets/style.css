@@ -1,0 +1,197 @@
+/* ── SCM Dashboard — Global Styles ── */
+:root {
+  --navy:   #1A3A5C;
+  --blue:   #2E6DA4;
+  --lblue:  #D6E4F0;
+  --teal:   #1D6A72;
+  --lteal:  #D0ECEC;
+  --green:  #1E8449;
+  --lgreen: #D5F5E3;
+  --amber:  #B8860B;
+  --lamber: #FFF3CD;
+  --red:    #C0392B;
+  --lred:   #FADBD8;
+  --gray:   #5D6D7E;
+  --lgray:  #F2F3F4;
+  --white:  #FFFFFF;
+  --purple: #6C3483;
+  --lpurple:#E8DAEF;
+  --orange: #D35400;
+  --lorange:#FDEBD0;
+  --font:   'Inter', 'Segoe UI', sans-serif;
+  --radius: 10px;
+  --shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: #F4F6F9;
+  color: #1A1A2E;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Topbar ── */
+.topbar {
+  background: var(--navy);
+  color: #fff;
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.topbar-brand { font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+.topbar-brand span { opacity: .6; font-weight: 400; margin-left: 8px; font-size: 13px; }
+.topbar-nav { display: flex; gap: 4px; }
+.topbar-nav a {
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: all .15s;
+}
+.topbar-nav a:hover { background: rgba(255,255,255,.1); color: #fff; }
+.topbar-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 500; }
+.last-updated { font-size: 11px; opacity: .5; }
+
+/* ── Layout ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 24px 20px; }
+.page-title { font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.page-sub   { font-size: 13px; color: var(--gray); margin-bottom: 20px; }
+
+/* ── Alert Banner ── */
+.alert-bar {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.alert-bar.critical { background: var(--lred); color: var(--red); border: 1px solid #f5b7b1; }
+.alert-bar.warning  { background: var(--lamber); color: var(--amber); border: 1px solid #fad7a0; }
+.alert-bar.ok       { background: var(--lgreen); color: var(--green); border: 1px solid #a9dfbf; }
+
+/* ── KPI Cards ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--blue);
+}
+.kpi-card.red    { border-top-color: var(--red); }
+.kpi-card.green  { border-top-color: var(--green); }
+.kpi-card.amber  { border-top-color: var(--amber); }
+.kpi-card.teal   { border-top-color: var(--teal); }
+.kpi-card.purple { border-top-color: var(--purple); }
+.kpi-label { font-size: 11px; font-weight: 500; color: var(--gray); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+.kpi-value { font-size: 28px; font-weight: 700; color: var(--navy); line-height: 1; }
+.kpi-value.red    { color: var(--red); }
+.kpi-value.green  { color: var(--green); }
+.kpi-value.amber  { color: var(--amber); }
+.kpi-sub   { font-size: 11px; color: var(--gray); margin-top: 4px; }
+
+/* ── Section ── */
+.section { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
+.section-head { padding: 14px 18px; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; }
+.section-title { font-size: 14px; font-weight: 600; color: var(--navy); }
+.section-body  { padding: 16px 18px; }
+
+/* ── Table ── */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--navy);
+  color: #fff;
+  padding: 9px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid #f0f0f0; transition: background .1s; }
+tbody tr:hover { background: #f8fafc; }
+tbody td { padding: 9px 12px; color: #333; white-space: nowrap; }
+
+/* ── Badge / Status ── */
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.badge-green  { background: var(--lgreen);  color: var(--green); }
+.badge-red    { background: var(--lred);    color: var(--red); }
+.badge-amber  { background: var(--lamber);  color: var(--amber); }
+.badge-blue   { background: var(--lblue);   color: var(--blue); }
+.badge-gray   { background: var(--lgray);   color: var(--gray); }
+.badge-purple { background: var(--lpurple); color: var(--purple); }
+.badge-teal   { background: var(--lteal);   color: var(--teal); }
+
+/* ── Filter Pills ── */
+.filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.pill {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  color: var(--gray);
+  transition: all .15s;
+}
+.pill:hover  { border-color: var(--blue); color: var(--blue); }
+.pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+/* ── Progress Bar ── */
+.progress-wrap { background: #eee; border-radius: 4px; height: 6px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; transition: width .3s; }
+.progress-fill.green  { background: var(--green); }
+.progress-fill.amber  { background: var(--amber); }
+.progress-fill.red    { background: var(--red); }
+
+/* ── Empty State ── */
+.empty { text-align: center; padding: 40px 20px; color: var(--gray); font-size: 13px; }
+.empty .icon { font-size: 32px; margin-bottom: 8px; }
+
+/* ── Loading ── */
+.loading { text-align: center; padding: 40px; color: var(--gray); }
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid #eee;
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .topbar-nav { display: none; }
+  .container { padding: 16px 12px; }
+}
