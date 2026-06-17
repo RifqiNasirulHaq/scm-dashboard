@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 3 — Dashboard MD</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.status-board{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px}
+.status-col{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.status-col-head{padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:#fff}
+.sc-maintain{background:#1E8449}.sc-monitor{background:#2E6DA4}
+.sc-replenish{background:#B8860B}.sc-push{background:#C0392B}.sc-idle{background:#5D6D7E}
+.status-col-body{padding:8px}
+.sku-chip{padding:7px 10px;border-radius:6px;margin-bottom:4px;font-size:12px;cursor:pointer;transition:background .1s;background:#f8f9fa}
+.sku-chip:hover{background:#eef2f7}
+.sku-chip .sku-id{font-weight:600;color:#1A3A5C;font-size:11px}
+.sku-chip .sku-dos{font-size:11px;color:#888}
+.sku-chip .sku-name{font-size:11px;color:#555;margin-top:1px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.detail-panel{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px;display:none}
+.detail-panel.show{display:block}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:14px 0}
+.detail-stat{text-align:center;padding:12px;background:#f8f9fa;border-radius:8px}
+.detail-stat .val{font-size:22px;font-weight:700;color:#1A3A5C}
+.detail-stat .lbl{font-size:11px;color:#888;margin-top:2px}
+.week-bar{display:flex;align-items:flex-end;gap:4px;height:80px;padding:0 4px}
+.week-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.week-bar-fill{width:100%;background:#2E6DA4;border-radius:3px 3px 0 0;min-height:2px;transition:height .3s}
+.week-bar-fill.forecast{background:#D6E4F0;border:1px dashed #2E6DA4}
+.week-bar-lbl{font-size:9px;color:#888;white-space:nowrap}
+@media(max-width:768px){.status-board{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">SCM Dashboard <span>Al-Quran Production</span></div>
+  <nav class="topbar-nav">
+    <a href="../index.html">Home</a>
+    <a href="../phase1/index.html">Phase 1 · Produksi</a>
+    <a href="../phase2/index.html">Phase 2 · Assembly</a>
+    <a href="../phase3/index.html" class="active">Phase 3 · MD</a>
+  </nav>
+  <div class="last-updated" id="last-updated">memuat...</div>
+</div>
+
+<div class="container">
+  <div class="page-title">📈 Dashboard MD</div>
+  <div class="page-sub">Status board SKU, Days of Stock, intake mingguan & reforecast</div>
+
+  <div id="alert-banner"></div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-card green"> <div class="kpi-label">Maintain</div>  <div class="kpi-value green"  id="k-maintain">—</div></div>
+    <div class="kpi-card">      <div class="kpi-label">Monitor</div>   <div class="kpi-value"         id="k-monitor">—</div></div>
+    <div class="kpi-card amber"> <div class="kpi-label">Replenish</div> <div class="kpi-value amber"  id="k-replenish">—</div></div>
+    <div class="kpi-card red">   <div class="kpi-label">Push</div>      <div class="kpi-value red"    id="k-push">—</div></div>
+    <div class="kpi-card purple"><div class="kpi-label">Idle</div>      <div class="kpi-value purple" id="k-idle">—</div></div>
+  </div>
+
+  <!-- Detail panel (muncul saat SKU diklik) -->
+  <div class="detail-panel" id="detail-panel">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div>
+        <div style="font-size:16px;font-weight:700;color:#1A3A5C" id="d-sku-name">—</div>
+        <div style="font-size:12px;color:#888" id="d-sku-id">—</div>
+      </div>
+      <div id="d-status-badge"></div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-stat"><div class="val" id="d-stok">—</div><div class="lbl">Stok Efektif</div></div>
+      <div class="detail-stat"><div class="val" id="d-dos">—</div><div class="lbl">Days of Stock</div></div>
+      <div class="detail-stat"><div class="val" id="d-aws">—</div><div class="lbl">Avg Weekly Sales</div></div>
+      <div class="detail-stat"><div class="val" id="d-onorder">—</div><div class="lbl">On Order</div></div>
+      <div class="detail-stat"><div class="val" id="d-forecast">—</div><div class="lbl">Reforecast 4W</div></div>
+      <div class="detail-stat"><div class="val" id="d-suggested">—</div><div class="lbl">Suggested Order</div></div>
+    </div>
+  </div>
+
+  <!-- Status Board -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">📊 SKU Status Board</div>
+      <input type="text" id="search-sku" placeholder="Cari SKU..." style="padding:5px 10px;border:1px solid #ddd;border-radius:6px;font-size:12px;width:160px">
+    </div>
+    <div class="section-body">
+      <div class="status-board" id="status-board">
+        <div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Memuat...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabel detail semua SKU -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">📋 Detail Semua SKU</div>
+      <div class="filter-bar" id="sku-filter" style="margin:0"></div>
+    </div>
+    <div class="section-body">
+      <div class="tbl-wrap" id="sku-table-wrap">
+        <div class="loading"><div class="spinner"></div>Memuat...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly Intake -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">📅 Weekly Intake & Forecast</div>
+    </div>
+    <div class="section-body" id="weekly-wrap">
+      <div class="loading"><div class="spinner"></div>Memuat...</div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/main.js"></script>
+<script>
+let allSkus = [];
+
+async function init() {
+  const data = await fetchData(3);
+  if (!data) {
+    showError('status-board',   'Gagal memuat data');
+    showError('sku-table-wrap', 'Gagal memuat data');
+    return;
+  }
+
+  setLastUpdated(data.last_updated);
+  showAlertBanner('alert-banner', data.alerts || []);
+
+  allSkus = data.sku_status || [];
+  const weekly = data.weekly_intake || [];
+
+  // ── KPI ──
+  const count = s => allSkus.filter(x => x.status_md === s).length;
+  document.getElementById('k-maintain').textContent  = count('MAINTAIN');
+  document.getElementById('k-monitor').textContent   = count('MONITOR');
+  document.getElementById('k-replenish').textContent = count('REPLENISH');
+  document.getElementById('k-push').textContent      = count('PUSH');
+  document.getElementById('k-idle').textContent      = count('IDLE');
+
+  // ── Status Board ──
+  renderBoard(allSkus);
+
+  // ── Filter + Table ──
+  const statuses = ['SEMUA','MAINTAIN','MONITOR','REPLENISH','PUSH','IDLE'];
+  initFilters('sku-filter',
+    statuses.map(s => ({ val: s, label: s })),
+    (val) => renderTable(val === 'SEMUA' ? allSkus : allSkus.filter(x => x.status_md === val))
+  );
+  renderTable(allSkus);
+
+  // ── Search ──
+  document.getElementById('search-sku').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    const filtered = allSkus.filter(s =>
+      (s.sku_id||'').toLowerCase().includes(q) ||
+      (s.sku_name||'').toLowerCase().includes(q)
+    );
+    renderBoard(filtered);
+    renderTable(filtered);
+  });
+
+  // ── Weekly chart ──
+  renderWeekly(weekly);
+}
+
+function renderBoard(skus) {
+  const groups = {
+    MAINTAIN:  skus.filter(s => s.status_md === 'MAINTAIN'),
+    MONITOR:   skus.filter(s => s.status_md === 'MONITOR'),
+    REPLENISH: skus.filter(s => s.status_md === 'REPLENISH'),
+    PUSH:      skus.filter(s => s.status_md === 'PUSH'),
+    IDLE:      skus.filter(s => s.status_md === 'IDLE'),
+  };
+  const labels = {
+    MAINTAIN:'✅ Maintain', MONITOR:'👁 Monitor',
+    REPLENISH:'🟡 Replenish', PUSH:'🔴 Push', IDLE:'⚫ Idle'
+  };
+  const cls = {
+    MAINTAIN:'sc-maintain', MONITOR:'sc-monitor',
+    REPLENISH:'sc-replenish', PUSH:'sc-push', IDLE:'sc-idle'
+  };
+
+  document.getElementById('status-board').innerHTML =
+    Object.entries(groups).map(([status, items]) => `
+      <div class="status-col">
+        <div class="status-col-head ${cls[status]}">${labels[status]} (${items.length})</div>
+        <div class="status-col-body">
+          ${items.length === 0
+            ? `<div style="font-size:11px;color:#ccc;padding:8px;text-align:center">—</div>`
+            : items.map(s => `
+              <div class="sku-chip" onclick="showDetail('${s.sku_id}')">
+                <div class="sku-id">${s.sku_id||'—'}</div>
+                <div class="sku-name">${s.sku_name||'—'}</div>
+                <div class="sku-dos">DOS: ${s.dos ? Number(s.dos).toFixed(0)+'hr' : '—'}</div>
+              </div>`).join('')
+          }
+        </div>
+      </div>`
+    ).join('');
+}
+
+function renderTable(skus) {
+  if (skus.length === 0) {
+    showEmpty('sku-table-wrap', 'Tidak ada SKU');
+    return;
+  }
+  document.getElementById('sku-table-wrap').innerHTML = `
+    <table id="sku-table">
+      <thead><tr>
+        <th data-sort="sku_id">SKU ID</th>
+        <th>Nama SKU</th>
+        <th data-sort="stok_efektif">Stok</th>
+        <th data-sort="aws_4w">AWS</th>
+        <th data-sort="dos">DOS (hr)</th>
+        <th data-sort="status_md">Status</th>
+        <th data-sort="suggested_order">Suggested Order</th>
+        <th data-sort="on_order">On Order</th>
+      </tr></thead>
+      <tbody>
+        ${skus.map(s => `<tr onclick="showDetail('${s.sku_id}')" style="cursor:pointer">
+          <td><strong>${s.sku_id||'—'}</strong></td>
+          <td>${s.sku_name||'—'}</td>
+          <td style="text-align:right">${fmtNum(s.stok_efektif)}</td>
+          <td style="text-align:right">${fmtNum(s.aws_4w)}</td>
+          <td style="text-align:right;font-weight:600">${s.dos ? Number(s.dos).toFixed(0) : '—'}</td>
+          <td>${badge(s.status_md||'—')}</td>
+          <td style="text-align:right;font-weight:600;color:#C0392B">${fmtNum(s.suggested_order||0)}</td>
+          <td style="text-align:right">${fmtNum(s.on_order||0)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  makeSortable('sku-table');
+}
+
+function showDetail(skuId) {
+  const s = allSkus.find(x => x.sku_id === skuId);
+  if (!s) return;
+  document.getElementById('d-sku-name').textContent  = s.sku_name || s.sku_id;
+  document.getElementById('d-sku-id').textContent    = s.sku_id;
+  document.getElementById('d-status-badge').innerHTML = badge(s.status_md);
+  document.getElementById('d-stok').textContent      = fmtNum(s.stok_efektif);
+  document.getElementById('d-dos').textContent       = s.dos ? Number(s.dos).toFixed(0)+'hr' : '—';
+  document.getElementById('d-aws').textContent       = fmtNum(s.aws_4w);
+  document.getElementById('d-onorder').textContent   = fmtNum(s.on_order||0);
+  document.getElementById('d-forecast').textContent  = fmtNum(s.reforecast_4w||0);
+  document.getElementById('d-suggested').textContent = fmtNum(s.suggested_order||0);
+  const panel = document.getElementById('detail-panel');
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function renderWeekly(weekly) {
+  if (!weekly || weekly.length === 0) {
+    showEmpty('weekly-wrap', 'Data intake mingguan belum tersedia');
+    return;
+  }
+  // Aggregate total per minggu
+  const weeks = {};
+  weekly.forEach(w => {
+    if (!weeks[w.week_id]) weeks[w.week_id] = { actual: 0, forecast: 0 };
+    weeks[w.week_id].actual   += Number(w.qty_terjual||0);
+    weeks[w.week_id].forecast += Number(w.forecast||0);
+  });
+  const wkeys  = Object.keys(weeks).sort().slice(-8);
+  const maxVal = Math.max(...wkeys.map(k => Math.max(weeks[k].actual, weeks[k].forecast)), 1);
+
+  document.getElementById('weekly-wrap').innerHTML = `
+    <div style="margin-bottom:12px;font-size:12px;color:#888">
+      Total penjualan aktual vs forecast 8 minggu terakhir
+      <span style="margin-left:12px;display:inline-flex;align-items:center;gap:4px">
+        <span style="width:12px;height:4px;background:#2E6DA4;display:inline-block;border-radius:2px"></span> Aktual
+        <span style="margin-left:8px;width:12px;height:4px;background:#D6E4F0;border:1px dashed #2E6DA4;display:inline-block;border-radius:2px"></span> Forecast
+      </span>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:8px;height:120px;padding-bottom:20px;position:relative">
+      ${wkeys.map(wk => {
+        const d = weeks[wk];
+        const hA = Math.round((d.actual   / maxVal) * 100);
+        const hF = Math.round((d.forecast / maxVal) * 100);
+        return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative">
+          <div style="display:flex;align-items:flex-end;gap:2px;height:100px">
+            <div title="Aktual: ${fmtNum(d.actual)}" style="width:16px;height:${hA}px;background:#2E6DA4;border-radius:3px 3px 0 0;min-height:2px;transition:height .3s"></div>
+            <div title="Forecast: ${fmtNum(d.forecast)}" style="width:16px;height:${hF}px;background:#D6E4F0;border:1px dashed #2E6DA4;border-radius:3px 3px 0 0;min-height:2px"></div>
+          </div>
+          <div style="font-size:9px;color:#888;text-align:center;margin-top:4px;white-space:nowrap">${wk.replace('2025-','')}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="margin-top:16px">
+      <table id="weekly-table" style="font-size:12px">
+        <thead><tr>
+          <th>Week</th><th>SKU</th>
+          <th style="text-align:right">Qty Terjual</th>
+          <th style="text-align:right">Revenue</th>
+          <th>Channel</th>
+        </tr></thead>
+        <tbody>
+          ${weekly.slice(-20).reverse().map(w => `<tr>
+            <td>${w.week_id||'—'}</td>
+            <td><strong>${w.sku_id||'—'}</strong></td>
+            <td style="text-align:right">${fmtNum(w.qty_terjual)}</td>
+            <td style="text-align:right">${fmtRp(w.revenue)}</td>
+            <td>${w.channel||'—'}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+init();
+</script>
+</body>
+</html>
