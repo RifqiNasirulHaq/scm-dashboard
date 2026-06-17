@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCM Dashboard — Al-Quran Supply Chain</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.hero{background:linear-gradient(135deg,#1A3A5C 0%,#2E6DA4 100%);color:#fff;padding:48px 24px;text-align:center}
+.hero h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.hero p{font-size:15px;opacity:.8;max-width:500px;margin:0 auto}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:32px 20px;max-width:1000px;margin:0 auto}
+.phase-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s;text-decoration:none;color:inherit;display:block}
+.phase-card:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.12)}
+.phase-card-head{padding:24px;color:#fff;display:flex;align-items:center;gap:14px}
+.phase-card-head.p1{background:linear-gradient(135deg,#1D6A72,#2E6DA4)}
+.phase-card-head.p2{background:linear-gradient(135deg,#6C3483,#2E6DA4)}
+.phase-card-head.p3{background:linear-gradient(135deg,#1E8449,#1D6A72)}
+.phase-icon{font-size:32px;width:52px;height:52px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.phase-name{font-size:16px;font-weight:700}
+.phase-desc-short{font-size:12px;opacity:.85;margin-top:2px}
+.phase-card-body{padding:18px 20px}
+.phase-features{list-style:none;font-size:13px;color:#5D6D7E;display:flex;flex-direction:column;gap:6px}
+.phase-features li::before{content:"→ ";color:#aaa}
+.phase-btn{display:block;margin-top:16px;padding:10px;background:#F4F6F9;border-radius:8px;text-align:center;font-size:13px;font-weight:600;color:#1A3A5C;transition:background .15s}
+.phase-card:hover .phase-btn{background:#1A3A5C;color:#fff}
+.status-row{display:flex;gap:8px;align-items:center;justify-content:center;padding:16px;background:#F4F6F9;font-size:12px;color:#5D6D7E}
+.dot{width:8px;height:8px;border-radius:50%;background:#1E8449}
+.dot.loading{background:#B8860B}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>📊 SCM Dashboard</h1>
+  <p>Supply Chain Management System — Al-Quran Cover & Inner Production</p>
+  <div style="margin-top:16px;font-size:12px;opacity:.6" id="hero-updated">Memuat status data...</div>
+</div>
+
+<div class="phase-grid">
+
+  <a href="phase1/index.html" class="phase-card">
+    <div class="phase-card-head p1">
+      <div class="phase-icon">🏭</div>
+      <div>
+        <div class="phase-name">Phase 1 — Produksi</div>
+        <div class="phase-desc-short">Demand · PPIC · Procurement · WH · QC</div>
+      </div>
+    </div>
+    <div class="phase-card-body">
+      <ul class="phase-features">
+        <li>Monitor semua Purchase Order aktif</li>
+        <li>Work Order progress per vendor</li>
+        <li>QC pass rate & NCR open</li>
+        <li>Alert material menipis</li>
+      </ul>
+      <div class="phase-btn">Buka Dashboard Produksi →</div>
+    </div>
+  </a>
+
+  <a href="phase2/index.html" class="phase-card">
+    <div class="phase-card-head p2">
+      <div class="phase-icon">🔧</div>
+      <div>
+        <div class="phase-name">Phase 2 — Assembly</div>
+        <div class="phase-desc-short">Stok Cover · Inner · Pairing Calculator</div>
+      </div>
+    </div>
+    <div class="phase-card-body">
+      <ul class="phase-features">
+        <li>Stok 60 SKU cover real-time</li>
+        <li>Stok 5 jenis inner (bottleneck)</li>
+        <li>Kalkulasi max assembleable per SKU</li>
+        <li>Alert cover/inner akan habis</li>
+      </ul>
+      <div class="phase-btn">Buka Dashboard Assembly →</div>
+    </div>
+  </a>
+
+  <a href="phase3/index.html" class="phase-card">
+    <div class="phase-card-head p3">
+      <div class="phase-icon">📈</div>
+      <div>
+        <div class="phase-name">Phase 3 — MD</div>
+        <div class="phase-desc-short">SKU Status · Intake · Reforecast</div>
+      </div>
+    </div>
+    <div class="phase-card-body">
+      <ul class="phase-features">
+        <li>Status board: Maintain/Replenish/Push/Idle</li>
+        <li>Days of Stock & Average Weekly Sales</li>
+        <li>Intake & reforecast mingguan</li>
+        <li>Suggested order per SKU</li>
+      </ul>
+      <div class="phase-btn">Buka Dashboard MD →</div>
+    </div>
+  </a>
+
+</div>
+
+<div class="status-row">
+  <div class="dot" id="status-dot"></div>
+  <span id="status-text">Mengecek koneksi data...</span>
+</div>
+
+<script src="assets/main.js"></script>
+<script>
+async function init() {
+  // Cek apakah data JSON tersedia
+  try {
+    const p3 = await fetchData(3);
+    const dot = document.getElementById('status-dot');
+    const txt = document.getElementById('status-text');
+    const upd = document.getElementById('hero-updated');
+
+    if (p3 && p3.last_updated) {
+      dot.style.background = '#1E8449';
+      txt.textContent = 'Data tersambung — ' + fmtDateTime(p3.last_updated);
+      upd.textContent = 'Last sync: ' + timeAgo(p3.last_updated);
+    } else {
+      dot.style.background = '#B8860B';
+      txt.textContent = 'Data tersedia tapi belum ada isi — jalankan Apps Script export';
+      upd.textContent = 'Menunggu data pertama';
+    }
+  } catch(e) {
+    document.getElementById('status-dot').style.background = '#C0392B';
+    document.getElementById('status-text').textContent = 'Tidak bisa mengambil data — cek koneksi atau Apps Script';
+  }
+}
+init();
+</script>
+</body>
+</html>
