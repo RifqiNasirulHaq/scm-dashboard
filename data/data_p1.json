@@ -1,0 +1,14 @@
+{
+  "last_updated": "2025-06-17T00:00:00",
+  "phase": "P1",
+  "kpi": {
+    "po_open": 0,
+    "po_partial": 0,
+    "wo_aktif": 0,
+    "ncr_open": 0,
+    "qc_pass_rate": 0
+  },
+  "work_orders": [],
+  "po_tracker": [],
+  "alerts": []
+}
