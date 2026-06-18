@@ -1,7 +1,169 @@
 {
-  "last_updated": "2025-06-17T00:00:00",
+  "last_updated": "2026-06-18T04:24:55.676Z",
   "phase": "P3",
-  "sku_status": [],
-  "weekly_intake": [],
-  "alerts": []
+  "sku_status": [
+    {
+      "sku_id": "SKU-001",
+      "sku_name": "Cover Quran Premium A5 Hijau",
+      "stok_efektif": 50,
+      "aws_4w": 50,
+      "dos": 7,
+      "status_md": "PUSH",
+      "reforecast_4w": 2800,
+      "suggested_order": 330171.4285714286,
+      "on_order": 0,
+      "stok_setelah_po": 50
+    },
+    {
+      "sku_id": "SKU-002",
+      "sku_name": "Cover Quran Premium A5 Merah",
+      "stok_efektif": 0,
+      "aws_4w": 31,
+      "dos": 0,
+      "status_md": "PUSH",
+      "reforecast_4w": 1736,
+      "suggested_order": 204737.2857142857,
+      "on_order": 0,
+      "stok_setelah_po": 0
+    },
+    {
+      "sku_id": "SKU-003",
+      "sku_name": "Cover Quran Jumbo Coklat",
+      "stok_efektif": 0,
+      "aws_4w": 20,
+      "dos": 0,
+      "status_md": "PUSH",
+      "reforecast_4w": 1120,
+      "suggested_order": 132088.57142857142,
+      "on_order": 0,
+      "stok_setelah_po": 0
+    },
+    {
+      "sku_id": "SKU-004",
+      "sku_name": "Cover Quran Mini Biru",
+      "stok_efektif": 0,
+      "aws_4w": 0,
+      "dos": 999,
+      "status_md": "IDLE",
+      "reforecast_4w": 0,
+      "suggested_order": 0,
+      "on_order": 0,
+      "stok_setelah_po": 0
+    },
+    {
+      "sku_id": "SKU-005",
+      "sku_name": "Set Quran + Mukena Putih",
+      "stok_efektif": 0,
+      "aws_4w": 0,
+      "dos": 999,
+      "status_md": "IDLE",
+      "reforecast_4w": 0,
+      "suggested_order": 0,
+      "on_order": 0,
+      "stok_setelah_po": 0
+    },
+    {
+      "sku_id": "ℹ️  DOS (Days of Stock) = (Stok Efektif / AWS) × 7. STATUS otomatis: MAINTAIN>90hr | MONITOR>30hr | REPLENISH>14hr | PUSH≤14hr | IDLE=AWS=0. SUGGESTED_ORDER = max(0, Reforecast + Safety Stock - Stok - On Order).",
+      "sku_name": null,
+      "stok_efektif": 0,
+      "aws_4w": 0,
+      "dos": 0,
+      "status_md": "IDLE",
+      "reforecast_4w": 0,
+      "suggested_order": 0,
+      "on_order": 0,
+      "stok_setelah_po": 0
+    },
+    {
+      "sku_id": "📌  LAST UPDATED:",
+      "sku_name": "2026-06-18T04:19:09.485Z",
+      "stok_efektif": 0,
+      "aws_4w": 0,
+      "dos": 0,
+      "status_md": "IDLE",
+      "reforecast_4w": 0,
+      "suggested_order": 0,
+      "on_order": 0,
+      "stok_setelah_po": 0
+    }
+  ],
+  "weekly_intake": [
+    {
+      "week_id": "2025-W22",
+      "sku_id": "SKU-001",
+      "qty_terjual": 45,
+      "revenue": 3825000,
+      "channel": "Shopee"
+    },
+    {
+      "week_id": "2025-W22",
+      "sku_id": "SKU-002",
+      "qty_terjual": 30,
+      "revenue": 2550000,
+      "channel": "Tokopedia"
+    },
+    {
+      "week_id": "2025-W22",
+      "sku_id": "SKU-003",
+      "qty_terjual": 20,
+      "revenue": 1900000,
+      "channel": "Shopee"
+    },
+    {
+      "week_id": "2025-W23",
+      "sku_id": "SKU-001",
+      "qty_terjual": 52,
+      "revenue": 4420000,
+      "channel": "Shopee"
+    },
+    {
+      "week_id": "2025-W23",
+      "sku_id": "SKU-002",
+      "qty_terjual": 28,
+      "revenue": 2380000,
+      "channel": "Tokopedia"
+    },
+    {
+      "week_id": "2025-W24",
+      "sku_id": "SKU-001",
+      "qty_terjual": 48,
+      "revenue": 4080000,
+      "channel": "Shopee"
+    },
+    {
+      "week_id": "2025-W24",
+      "sku_id": "SKU-002",
+      "qty_terjual": 35,
+      "revenue": 2975000,
+      "channel": "Tokopedia"
+    },
+    {
+      "week_id": "2025-W25",
+      "sku_id": "SKU-001",
+      "qty_terjual": 55,
+      "revenue": 4675000,
+      "channel": "Shopee"
+    },
+    {
+      "week_id": "ℹ️  Input setiap Senin pagi untuk minggu sebelumnya. WEEK_ID format: YYYY-WWW. Data ini digunakan DASH_P3 untuk menghitung AWS (Average Weekly Sales) dan DOS (Days of Stock).",
+      "sku_id": null,
+      "qty_terjual": 0,
+      "revenue": 0,
+      "channel": null
+    }
+  ],
+  "alerts": [
+    {
+      "item_id": "SKU-001",
+      "stok_current": 50,
+      "status": "WARNING",
+      "aksi": "🟡 Monitor & siapkan PO"
+    },
+    {
+      "item_id": "SKU-002",
+      "stok_current": 0,
+      "status": "CRITICAL",
+      "aksi": "🔴 Segera assembly / restock"
+    }
+  ]
 }
