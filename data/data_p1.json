@@ -1,14 +1,158 @@
 {
-  "last_updated": "2025-06-17T00:00:00",
+  "last_updated": "2026-06-18T04:24:54.538Z",
   "phase": "P1",
   "kpi": {
-    "po_open": 0,
-    "po_partial": 0,
-    "wo_aktif": 0,
-    "ncr_open": 0,
-    "qc_pass_rate": 0
+    "po_open": 1,
+    "po_partial": 1,
+    "wo_aktif": 1,
+    "qc_pass_rate": 0.6666666666666666,
+    "ncr_open": 3,
+    "po_pending": 1,
+    "capa_open": 0
   },
-  "work_orders": [],
-  "po_tracker": [],
-  "alerts": []
+  "po_tracker": [
+    {
+      "po_id": "PO-2025-001",
+      "phase": "P1",
+      "vendor_id": "VND-001",
+      "item_type": "COVER",
+      "item_id": "CVR-A5-HJ",
+      "qty_order": 200,
+      "qty_received": 200,
+      "qty_outstanding": 0,
+      "tgl_po": "2025-05-25T07:00:00.000Z",
+      "eta": "2025-06-01T07:00:00.000Z",
+      "status": "CLOSED",
+      "keterangan": "Lunas"
+    },
+    {
+      "po_id": "PO-2025-002",
+      "phase": "P1",
+      "vendor_id": "VND-PKT-001",
+      "item_type": "INNER",
+      "item_id": "INN-A5-STD",
+      "qty_order": 500,
+      "qty_received": 500,
+      "qty_outstanding": 0,
+      "tgl_po": "2025-05-28T07:00:00.000Z",
+      "eta": "2025-06-01T07:00:00.000Z",
+      "status": "CLOSED",
+      "keterangan": null
+    },
+    {
+      "po_id": "PO-2025-003",
+      "phase": "P1",
+      "vendor_id": "VND-001",
+      "item_type": "COVER",
+      "item_id": "CVR-A5-MR",
+      "qty_order": 150,
+      "qty_received": 0,
+      "qty_outstanding": 150,
+      "tgl_po": "2025-06-10T07:00:00.000Z",
+      "eta": "2025-07-01T07:00:00.000Z",
+      "status": "OPEN",
+      "keterangan": null
+    },
+    {
+      "po_id": "PO-2025-004",
+      "phase": "P1",
+      "vendor_id": "VND-002",
+      "item_type": "COVER",
+      "item_id": "CVR-JB-CK",
+      "qty_order": 80,
+      "qty_received": 40,
+      "qty_outstanding": 40,
+      "tgl_po": "2025-06-05T07:00:00.000Z",
+      "eta": "2025-06-25T07:00:00.000Z",
+      "status": "PARTIAL",
+      "keterangan": "50% received"
+    }
+  ],
+  "work_orders": [
+    {
+      "batch_id": "PROD-2025-001",
+      "tgl_produksi": "2025-06-01T07:00:00.000Z",
+      "item_type": "COVER",
+      "item_id": "CVR-A5-HJ",
+      "vendor_id": "VND-001",
+      "qty_produksi": 200,
+      "qty_qc_pass": 196,
+      "qty_reject": 4,
+      "reject_rate": 0.02,
+      "status_qc": "PASS",
+      "keterangan": "4 pcs rejected - cacat jahitan"
+    },
+    {
+      "batch_id": "PROD-2025-002",
+      "tgl_produksi": "2025-06-01T07:00:00.000Z",
+      "item_type": "INNER",
+      "item_id": "INN-A5-STD",
+      "vendor_id": "VND-PKT-001",
+      "qty_produksi": 500,
+      "qty_qc_pass": 500,
+      "qty_reject": 0,
+      "reject_rate": 0,
+      "status_qc": "PASS",
+      "keterangan": null
+    },
+    {
+      "batch_id": "PROD-2025-003",
+      "tgl_produksi": "2025-06-15T07:00:00.000Z",
+      "item_type": "COVER",
+      "item_id": "CVR-A5-MR",
+      "vendor_id": "VND-001",
+      "qty_produksi": 150,
+      "qty_qc_pass": 0,
+      "qty_reject": 0,
+      "reject_rate": 0,
+      "status_qc": "IN PROCESS",
+      "keterangan": "Estimasi selesai 30 Jun"
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "ALT-001",
+      "phase": "P3",
+      "item_type": "SKU",
+      "item_id": "SKU-001",
+      "threshold_reorder": 50,
+      "threshold_safety": 14,
+      "stok_current": 50,
+      "status": "WARNING",
+      "aksi": "🟡 Monitor & siapkan PO"
+    },
+    {
+      "alert_id": "ALT-002",
+      "phase": "P3",
+      "item_type": "SKU",
+      "item_id": "SKU-002",
+      "threshold_reorder": 50,
+      "threshold_safety": 14,
+      "stok_current": 0,
+      "status": "CRITICAL",
+      "aksi": "🔴 Segera assembly / restock"
+    },
+    {
+      "alert_id": "ALT-004",
+      "phase": "P2",
+      "item_type": "COVER",
+      "item_id": "CVR-A5-MR",
+      "threshold_reorder": 100,
+      "threshold_safety": 30,
+      "stok_current": 0,
+      "status": "CRITICAL",
+      "aksi": "🔴 Segera produksi / PO ke vendor"
+    },
+    {
+      "alert_id": "ALT-006",
+      "phase": "P2",
+      "item_type": "INNER",
+      "item_id": "INN-JB-STD",
+      "threshold_reorder": 100,
+      "threshold_safety": 30,
+      "stok_current": 0,
+      "status": "CRITICAL",
+      "aksi": "🔴 DARURAT — inner habis, assembly berhenti!"
+    }
+  ]
 }
