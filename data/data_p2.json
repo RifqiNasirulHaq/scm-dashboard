@@ -1,8 +1,202 @@
 {
-  "last_updated": "2025-06-17T00:00:00",
+  "last_updated": "2026-06-18T04:24:55.094Z",
   "phase": "P2",
-  "stok_cover": [],
-  "stok_inner": [],
-  "assembly_calc": [],
-  "alerts": []
+  "stok_cover": [
+    {
+      "cover_id": "CVR-A5-HJ",
+      "cover_name": "Cover A5 Hijau Emerald",
+      "stok_saat_ini": 150,
+      "safety_stock": 30,
+      "status": "OK",
+      "sku_yang_tergantung": 1
+    },
+    {
+      "cover_id": "CVR-A5-MR",
+      "cover_name": "Cover A5 Merah Marun",
+      "stok_saat_ini": 0,
+      "safety_stock": 30,
+      "status": "CRITICAL",
+      "sku_yang_tergantung": 1
+    },
+    {
+      "cover_id": "CVR-JB-CK",
+      "cover_name": "Cover Jumbo Coklat",
+      "stok_saat_ini": 0,
+      "safety_stock": 20,
+      "status": "CRITICAL",
+      "sku_yang_tergantung": 1
+    },
+    {
+      "cover_id": "STOK INNER — Bottleneck Utama Assembly",
+      "cover_name": null,
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "",
+      "sku_yang_tergantung": 0
+    },
+    {
+      "cover_id": "INNER_ID",
+      "cover_name": "INNER_NAME",
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "STATUS",
+      "sku_yang_tergantung": 0
+    },
+    {
+      "cover_id": "INN-A5-STD",
+      "cover_name": "Inner A5 Standard",
+      "stok_saat_ini": 450,
+      "safety_stock": 60,
+      "status": "OK",
+      "sku_yang_tergantung": 3
+    },
+    {
+      "cover_id": "INN-JB-STD",
+      "cover_name": "Inner Jumbo Standard",
+      "stok_saat_ini": 0,
+      "safety_stock": 30,
+      "status": "CRITICAL",
+      "sku_yang_tergantung": 1
+    },
+    {
+      "cover_id": "INN-MN-STD",
+      "cover_name": "Inner Mini Standard",
+      "stok_saat_ini": 0,
+      "safety_stock": 30,
+      "status": "CRITICAL",
+      "sku_yang_tergantung": 1
+    },
+    {
+      "cover_id": "MAX ASSEMBLEABLE PER SKU — Kalkulasi Otomatis",
+      "cover_name": null,
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "",
+      "sku_yang_tergantung": 0
+    },
+    {
+      "cover_id": "SKU_ID",
+      "cover_name": "COVER_ID",
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "STOK_INNER",
+      "sku_yang_tergantung": 0
+    },
+    {
+      "cover_id": "SKU-001",
+      "cover_name": "CVR-A5-HJ",
+      "stok_saat_ini": 0,
+      "safety_stock": 150,
+      "status": "450",
+      "sku_yang_tergantung": 150
+    },
+    {
+      "cover_id": "SKU-002",
+      "cover_name": "CVR-A5-MR",
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "450",
+      "sku_yang_tergantung": 0
+    },
+    {
+      "cover_id": "SKU-003",
+      "cover_name": "CVR-JB-CK",
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "",
+      "sku_yang_tergantung": 0
+    },
+    {
+      "cover_id": "📌  LAST UPDATED: ",
+      "cover_name": "2026-06-18T04:19:09.485Z",
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "",
+      "sku_yang_tergantung": 0
+    }
+  ],
+  "stok_inner": [
+    {
+      "inner_id": "INN-A5-STD",
+      "inner_name": "Inner A5 Standard",
+      "stok_saat_ini": 450,
+      "safety_stock": 60,
+      "status": "OK",
+      "cover_yang_pakai": 3
+    },
+    {
+      "inner_id": "INN-JB-STD",
+      "inner_name": "Inner Jumbo Standard",
+      "stok_saat_ini": 0,
+      "safety_stock": 30,
+      "status": "CRITICAL",
+      "cover_yang_pakai": 1
+    },
+    {
+      "inner_id": "INN-MN-STD",
+      "inner_name": "Inner Mini Standard",
+      "stok_saat_ini": 0,
+      "safety_stock": 30,
+      "status": "CRITICAL",
+      "cover_yang_pakai": 1
+    },
+    {
+      "inner_id": "MAX ASSEMBLEABLE PER SKU — Kalkulasi Otomatis",
+      "inner_name": null,
+      "stok_saat_ini": 0,
+      "safety_stock": 0,
+      "status": "",
+      "cover_yang_pakai": 0
+    }
+  ],
+  "assembly_calc": [
+    {
+      "sku_id": "SKU-001",
+      "cover_id": "CVR-A5-HJ",
+      "inner_id": "INN-A5-STD",
+      "stok_cover": 150,
+      "stok_inner": 450,
+      "max_assembleable": 150
+    },
+    {
+      "sku_id": "SKU-002",
+      "cover_id": "CVR-A5-MR",
+      "inner_id": "INN-A5-STD",
+      "stok_cover": 0,
+      "stok_inner": 450,
+      "max_assembleable": 0
+    },
+    {
+      "sku_id": "SKU-003",
+      "cover_id": "CVR-JB-CK",
+      "inner_id": "INN-JB-STD",
+      "stok_cover": 0,
+      "stok_inner": 0,
+      "max_assembleable": 0
+    },
+    {
+      "sku_id": "📌  LAST UPDATED: ",
+      "cover_id": "2026-06-18T04:19:09.485Z",
+      "inner_id": null,
+      "stok_cover": 0,
+      "stok_inner": 0,
+      "max_assembleable": 0
+    }
+  ],
+  "alerts": [
+    {
+      "item_id": "CVR-A5-MR",
+      "item_type": "COVER",
+      "stok_current": 0,
+      "status": "CRITICAL",
+      "aksi": "🔴 Segera produksi / PO ke vendor"
+    },
+    {
+      "item_id": "INN-JB-STD",
+      "item_type": "INNER",
+      "stok_current": 0,
+      "status": "CRITICAL",
+      "aksi": "🔴 DARURAT — inner habis, assembly berhenti!"
+    }
+  ]
 }
