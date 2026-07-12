@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T07:40:34.499Z",
+  "last_updated": "2026-07-12T07:55:35.231Z",
   "phase": "P2",
   "stok_cover": [
     {
@@ -108,7 +108,7 @@
     },
     {
       "cover_id": "📌  LAST UPDATED: ",
-      "cover_name": "2026-07-12T07:40:32.988Z",
+      "cover_name": "2026-07-12T07:55:32.961Z",
       "stok_saat_ini": 0,
       "safety_stock": 0,
       "status": "",
@@ -176,7 +176,7 @@
     },
     {
       "sku_id": "📌  LAST UPDATED: ",
-      "cover_id": "2026-07-12T07:40:32.988Z",
+      "cover_id": "2026-07-12T07:55:32.961Z",
       "inner_id": null,
       "stok_cover": 0,
       "stok_inner": 0,
